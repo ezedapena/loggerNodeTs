@@ -1,4 +1,3 @@
-
 export enum LogSeverityLevel {
     low = 'low',
     medium = 'medium',
@@ -12,7 +11,6 @@ export interface LogEntityOptions {
     createdAt?: Date;
 }
 
-
 export class LogEntity {
 
     public level: LogSeverityLevel; // Enum
@@ -21,7 +19,6 @@ export class LogEntity {
     public origin: string;
 
     constructor(options: LogEntityOptions) {
-
         const { message, level, origin, createdAt = new Date() } = options;
         this.message = message;
         this.level = level;
@@ -30,9 +27,18 @@ export class LogEntity {
     }
 
     static fromJson = (json: string): LogEntity => {
-        const { message, level, createdAt } = JSON.parse(json);
+        const parseableJson = json.length ? json : '{}';
+    
+        return this.createLog(JSON.parse(parseableJson));
+    }
 
-        if (!message) throw new Error("LogEntity requires a message");
+    static fromObject = (object: { [key: string]: any }): LogEntity => {
+        const { message, level, createdAt, origin } = object;
+        return this.createLog({ level, message, createdAt, origin });
+    }
+
+    private static createLog = (options: LogEntityOptions): LogEntity => {
+        const { message, level, origin, createdAt = new Date() } = options;
 
         if (!Object.values(LogSeverityLevel).includes(level)) {
             throw new Error(`Invalid level: ${level}. Must be one of ${Object.values(LogSeverityLevel).join(', ')}`);
@@ -43,13 +49,11 @@ export class LogEntity {
             throw new Error(`Invalid date: ${createdAt}. Must be a valid date.`);
         }
 
-        const log = new LogEntity({
+        return new LogEntity({
             message,
             level,
             createdAt,
             origin,
         });
-
-        return log;
     }
 }

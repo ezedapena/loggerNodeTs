@@ -8,8 +8,8 @@ export class LogRepositoryImpl implements LogRepository {
         private readonly logDataSource: LogDataSource
     ) { }
 
-    async saveLogs(log: LogEntity): Promise<void> {
-        this.logDataSource.saveLogs(log);
+    async saveLog(log: LogEntity): Promise<void> {
+        this.logDataSource.saveLog(log);
     }
 
     async getLogs(severityLevel: LogSeverityLevel): Promise<LogEntity[]> {

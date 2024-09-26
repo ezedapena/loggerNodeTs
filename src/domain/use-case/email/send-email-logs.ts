@@ -28,7 +28,7 @@ export class SendEmailLogs implements SendLogEmailUseCase {
         level: LogSeverityLevel.low,
         origin: 'send-email-logs.ts',
       })
-      this.logRepository.saveLogs(log);
+      this.logRepository.saveLog(log);
 
       return true;
     } catch (error) {
@@ -38,7 +38,7 @@ export class SendEmailLogs implements SendLogEmailUseCase {
         level: LogSeverityLevel.high,
         origin: 'send-email-logs.ts',
       })
-      this.logRepository.saveLogs(log);
+      this.logRepository.saveLog(log);
       return false;
     }
 
