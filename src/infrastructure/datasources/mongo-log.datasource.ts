@@ -6,10 +6,9 @@ import { LogEntity, LogSeverityLevel } from "../../domain/entities/log.entity";
 export class MongoLogDataSource implements LogDataSource {
     async saveLog(log: LogEntity): Promise<void> {
         const newLog = await LogModel.create(log)
-        // await newLog.save();
+        await newLog.save();
 
-        const logs = await LogModel.find();
-
+        console.log("Mongo log created")
     }
     async getLogs(severityLevel: LogSeverityLevel): Promise<LogEntity[]> {
         const logs = await LogModel.find({

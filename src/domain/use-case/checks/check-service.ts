@@ -1,12 +1,16 @@
-import { LogEntity, LogSeverityLevel } from "../../entities/log.entity";
-import { LogRepository } from "../../repository/log.repository";
+import { LogEntity, LogSeverityLevel } from '../../entities/log.entity';
+import { LogRepository } from '../../repository/log.repository';
 
 interface CheckServiceUseCase {
   execute(url: string): Promise<boolean>;
 }
 
-type SuccessCallback = () => void;
-type ErrorCallback = (error: string) => void;
+
+type SuccessCallback = (() => void) | undefined;
+type ErrorCallback = ((error: string) => void) | undefined;
+
+
+
 
 export class CheckService implements CheckServiceUseCase {
 
@@ -47,7 +51,6 @@ export class CheckService implements CheckServiceUseCase {
 
       return false;
     }
-
 
   }
 
